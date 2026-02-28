@@ -1,4 +1,4 @@
-package com.gutil;
+package com.gutil.gui;
 
 import javax.imageio.ImageIO;
 import java.awt.Color;

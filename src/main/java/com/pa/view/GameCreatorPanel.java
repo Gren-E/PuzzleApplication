@@ -1,10 +1,10 @@
-package com.pa.gui;
+package com.pa.view;
 
-import com.gutil.GBC;
-import com.gutil.ImageUtil;
-import com.gutil.WindowUtil;
-import com.pa.creator.GameCreator;
-import com.pa.game.Game;
+import com.gutil.gui.GBC;
+import com.gutil.gui.ImageUtil;
+import com.gutil.gui.WindowUtil;
+import com.pa.controller.GameCreatorController;
+import com.pa.model.game.Game;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,13 +18,13 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
-public class CreatorPanel extends JPanel {
+public class GameCreatorPanel extends JPanel {
 
-    private static final Logger LOG = LoggerFactory.getLogger(CreatorPanel.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GameCreatorPanel.class);
 
     private final AppWindow window;
 
-    private final GameCreator creator;
+    private final GameCreatorController creatorController;
 
     private final JLabel imagePath;
     private final JLabel imageDisplay;
@@ -32,10 +32,10 @@ public class CreatorPanel extends JPanel {
     private final JTextField rowsField;
     private final JTextField columnsField;
 
-    public CreatorPanel(AppWindow window) {
+    public GameCreatorPanel(AppWindow window) {
         this.window = window;
 
-        creator = new GameCreator();
+        creatorController = new GameCreatorController();
 
         JButton fileChoiceButton = new JButton("Choose Image");
         fileChoiceButton.addActionListener(this::handleChoiceButton);
@@ -65,10 +65,10 @@ public class CreatorPanel extends JPanel {
 
     private void buildGame(ActionEvent actionEvent) {
         try {
-            creator.setRows(Integer.parseInt(rowsField.getText()));
-            creator.setColumns(Integer.parseInt(columnsField.getText()));
+            creatorController.setRows(Integer.parseInt(rowsField.getText()));
+            creatorController.setColumns(Integer.parseInt(columnsField.getText()));
 
-            Game game = creator.buildGame();
+            Game game = creatorController.buildGame();
             window.loadGame(game);
         } catch (Exception e) {
             LOG.error("Cannot build a game.", e);
@@ -82,7 +82,7 @@ public class CreatorPanel extends JPanel {
         imagePath.setText(imageFile != null ? imageFile.getAbsolutePath() : "No image");
         imageDisplay.setIcon(image != null ? new ImageIcon(image) : null);
 
-        creator.setImage(image);
+        creatorController.setImage(image);
     }
 
 }

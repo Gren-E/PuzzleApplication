@@ -1,4 +1,4 @@
-package com.gutil;
+package com.gutil.gui;
 
 import java.awt.Font;
 import java.awt.FontMetrics;

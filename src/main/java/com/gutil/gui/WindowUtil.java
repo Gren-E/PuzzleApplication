@@ -1,4 +1,4 @@
-package com.gutil;
+package com.gutil.gui;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;

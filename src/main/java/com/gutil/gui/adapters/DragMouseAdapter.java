@@ -1,4 +1,4 @@
-package com.gutil.adapters;
+package com.gutil.gui.adapters;
 
 import java.awt.Component;
 import java.awt.event.MouseAdapter;

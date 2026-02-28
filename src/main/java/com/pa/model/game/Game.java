@@ -1,6 +1,6 @@
-package com.pa.game;
+package com.pa.model.game;
 
-import com.pa.puzzle.PuzzlePiece;
+import com.pa.model.puzzle.PuzzlePiece;
 
 import java.awt.Image;
 import java.util.ArrayList;

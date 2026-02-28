@@ -1,6 +1,6 @@
 package com.pa;
 
-import com.pa.gui.AppWindow;
+import com.pa.view.AppWindow;
 
 import java.awt.EventQueue;
 

@@ -1,7 +1,8 @@
-package com.pa.creator;
+package com.pa.model.creator;
 
-import com.pa.game.Game;
-import com.pa.puzzle.PuzzlePiece;
+import com.pa.model.creator.factory.PiecesFactory;
+import com.pa.model.game.Game;
+import com.pa.model.puzzle.PuzzlePiece;
 
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -24,7 +25,7 @@ public class GameCreator {
     public void setImage(Image image) {
         this.image = image;
     }
-    
+
     public Game buildGame() {
         if (validateGameParameters()) {
             return new Game(image, generatePieces());
@@ -37,20 +38,8 @@ public class GameCreator {
     }
 
     public PuzzlePiece[][] generatePieces() {
-        PuzzlePiece[][] pieces = new PuzzlePiece[rows][columns];
-
-        int width = image.getWidth(null) / columns;
-        int height = image.getHeight(null) / rows;
-
-        for (int row = 0; row < rows; row++) {
-            for (int column = 0; column < columns; column++) {
-                Rectangle rectangle = new Rectangle(column * width, row * height, width, height);
-                PuzzlePiece piece = new PuzzlePiece(row * columns + column, rectangle);
-                pieces[row][column] = piece;
-            }
-        }
-
-        return pieces;
+        PiecesFactory factory = PiecesFactory.getFactory();
+        return factory.generatePieces(rows, columns, image.getWidth(null), image.getHeight(null));
     }
 
 }

@@ -1,6 +1,6 @@
-package com.pa.gui;
+package com.pa.view;
 
-import com.pa.puzzle.PuzzlePiece;
+import com.pa.model.puzzle.PuzzlePiece;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;

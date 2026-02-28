@@ -1,4 +1,4 @@
-package com.gutil;
+package com.gutil.gui;
 
 /**
  * Enum of horizontal alignment options for drawing {@code String} objects.

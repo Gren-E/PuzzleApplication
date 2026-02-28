@@ -1,4 +1,4 @@
-package com.pa.puzzle;
+package com.pa.model.puzzle;
 
 import java.awt.Point;
 import java.awt.Rectangle;

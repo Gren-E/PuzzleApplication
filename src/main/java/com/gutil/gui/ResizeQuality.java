@@ -1,4 +1,4 @@
-package com.gutil;
+package com.gutil.gui;
 
 /**
  * Enum of available resizing quality levels.
