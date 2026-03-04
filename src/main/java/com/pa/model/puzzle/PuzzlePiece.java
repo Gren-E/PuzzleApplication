@@ -1,21 +1,21 @@
 package com.pa.model.puzzle;
 
 import java.awt.Point;
-import java.awt.Rectangle;
+import java.awt.Shape;
 
 public class PuzzlePiece {
 
     private final int id;
 
-    private final Rectangle rectangle;
+    private final PieceShape shape;
 
     private Point currentPosition;
 
     private boolean isMatchedOnBoard;
 
-    public PuzzlePiece(int id, Rectangle rectangle) {
+    public PuzzlePiece(int id, PieceShape shape) {
         this.id = id;
-        this.rectangle = rectangle;
+        this.shape = shape;
     }
 
     public void setCurrentPosition(int x, int y) {
@@ -26,8 +26,11 @@ public class PuzzlePiece {
         return id;
     }
 
-    public Rectangle getRectangle() {
-        return rectangle;
+    public Shape getShape() {
+        return shape.getShape();
+    }
+    public Point getNWCorner() {
+        return shape.getNWCorner();
     }
 
     public Point getCurrentPosition() {
@@ -40,7 +43,7 @@ public class PuzzlePiece {
 
     @Override
     public String toString() {
-        return String.format("PuzzlePiece{id=%d, rectangle=%s, currentPosition=%s}", id, rectangle, currentPosition);
+        return String.format("PuzzlePiece{id=%d, currentPosition=%s}", id, currentPosition);
     }
 
 }

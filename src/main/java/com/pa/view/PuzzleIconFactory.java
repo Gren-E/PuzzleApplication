@@ -17,7 +17,6 @@ public class PuzzleIconFactory {
             for (PuzzlePiece piece : row) {
                 PuzzleIcon icon = new PuzzleIcon(image, piece);
                 DragMouseAdapter adapter = new DragMouseAdapter(icon);
-                icon.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLUE));
                 icon.addMouseListener(adapter);
                 icon.addMouseMotionListener(adapter);
                 icons.add(icon);
