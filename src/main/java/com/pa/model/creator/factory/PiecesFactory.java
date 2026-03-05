@@ -5,7 +5,7 @@ import com.pa.model.puzzle.PuzzlePiece;
 public abstract class PiecesFactory {
 
     public static PiecesFactory getFactory() {
-        return new RectangularPiecesFactory();
+        return new RightAngleBasedPiecesFactory();
     }
 
     public abstract PuzzlePiece[][] generatePieces(int rows, int columns, int width, int height);

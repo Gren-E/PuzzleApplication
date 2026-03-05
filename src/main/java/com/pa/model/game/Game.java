@@ -54,8 +54,8 @@ public class Game {
         int standardGap = 8;
         int shuffledRows = getRows();
         int shuffledColumns = (shuffledPieces.size() - 1) / shuffledRows + 1;
-        int width = shuffledPieces.get(0).getRectangle().width;
-        int height = shuffledPieces.get(0).getRectangle().height;
+        int width = shuffledPieces.get(0).getShape().getBounds().width;
+        int height = shuffledPieces.get(0).getShape().getBounds().height;
         int x = image.getWidth(null) + standardGap;
         int y = 0;
 
