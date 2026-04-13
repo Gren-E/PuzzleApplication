@@ -24,6 +24,7 @@ public class AppWindow extends JFrame {
         setTitle("PuzzleApplication");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
+        setUndecorated(true);
 
         gameController = new GameController();
 

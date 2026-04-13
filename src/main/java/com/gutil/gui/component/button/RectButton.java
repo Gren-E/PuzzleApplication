@@ -54,7 +54,7 @@ public class RectButton extends HighlightedButton {
         g2.setColor(mainColor);
         g2.fillRoundRect(5, 3, width - 10, height - 8, 25, 25);
 
-        drawText(g2);
+        //drawText(g2);
     }
 
 }

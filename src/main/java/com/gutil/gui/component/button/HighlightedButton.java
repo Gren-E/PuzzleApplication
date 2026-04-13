@@ -4,8 +4,13 @@ import com.gutil.gui.GraphicsUtil;
 import com.gutil.gui.HorizontalAlignment;
 import com.gutil.gui.adapters.HighlightingMouseAdapter;
 
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
@@ -30,6 +35,7 @@ public abstract class HighlightedButton extends Button {
      * A foreground color of the {@code Button} while disabled.
      */
     private Color foregroundDisabledColor;
+
 
     /**
      * Creates a default {@code HighlightedButton} with no text displayed.
@@ -74,7 +80,7 @@ public abstract class HighlightedButton extends Button {
     public void drawText(Graphics2D g2) {
         g2.setColor(getForeground());
         String adjustedText = GraphicsUtil.cropString(text, getFont(), getWidth() - 10, g2);
-        GraphicsUtil.drawString(adjustedText, new Rectangle(5, 0, getWidth() - 10, getHeight()), getFont(), HorizontalAlignment.CENTER, 0, g2);
+        GraphicsUtil.drawString(adjustedText, new Rectangle(5, 0, getWidth() - 10, getHeight() - 4), getFont(), HorizontalAlignment.CENTER, 0, g2);
     }
 
     /**

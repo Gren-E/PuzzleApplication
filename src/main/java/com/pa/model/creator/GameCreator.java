@@ -1,5 +1,6 @@
 package com.pa.model.creator;
 
+import com.pa.model.creator.factory.PieceShape;
 import com.pa.model.creator.factory.PiecesFactory;
 import com.pa.model.game.Game;
 import com.pa.model.puzzle.PuzzlePiece;
@@ -14,12 +15,18 @@ public class GameCreator {
     private int rows;
     private int columns;
 
+    private PieceShape pieceShape;
+
     public void setRows(int rows) {
         this.rows = rows;
     }
 
     public void setColumns(int columns) {
         this.columns = columns;
+    }
+
+    public void setPieceShape(PieceShape pieceShape) {
+        this.pieceShape = pieceShape;
     }
 
     public void setImage(Image image) {
@@ -38,7 +45,7 @@ public class GameCreator {
     }
 
     public PuzzlePiece[][] generatePieces() {
-        PiecesFactory factory = PiecesFactory.getFactory();
+        PiecesFactory factory = PiecesFactory.getFactory(pieceShape);
         return factory.generatePieces(rows, columns, image.getWidth(null), image.getHeight(null));
     }
 

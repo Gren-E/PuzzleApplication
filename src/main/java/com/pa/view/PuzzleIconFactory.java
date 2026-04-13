@@ -3,8 +3,6 @@ package com.pa.view;
 import com.gutil.gui.adapters.DragMouseAdapter;
 import com.pa.model.puzzle.PuzzlePiece;
 
-import javax.swing.border.MatteBorder;
-import java.awt.Color;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
