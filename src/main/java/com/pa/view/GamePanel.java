@@ -1,6 +1,8 @@
 package com.pa.view;
 
+import com.gutil.gui.adapters.DragMouseAdapter;
 import com.pa.controller.GameController;
+import com.pa.controller.PuzzleIconDragMouseAdapter;
 import com.pa.model.puzzle.PuzzlePiece;
 
 import javax.swing.JLayeredPane;
@@ -25,6 +27,8 @@ public class GamePanel extends JPanel {
     private JLayeredPane mainPanel;
 
     public GamePanel(AppWindow parent) {
+        setBackground(Color.BLACK);
+
         this.parent = parent;
         gameController = parent.getGameController();
     }
@@ -34,11 +38,17 @@ public class GamePanel extends JPanel {
         mainPanel.setLayout(null);
 
         offset = new Point(-50, -50);
+        gameController.setOffsetSupplier(this::getOffset);
 
         imageBoard = new JPanel();
         imageBoard.setBackground(Color.GRAY);
 
         icons = PuzzleIconFactory.createPuzzleIcons(gameController.getPieces(), gameController.getImage());
+        for (PuzzleIcon icon : icons) {
+            DragMouseAdapter adapter = new PuzzleIconDragMouseAdapter(icon, gameController);
+            icon.addMouseListener(adapter);
+            icon.addMouseMotionListener(adapter);
+        }
 
         gameController.regularizePieces();
         regularizeIcons();
@@ -55,9 +65,17 @@ public class GamePanel extends JPanel {
 
         for (PuzzleIcon icon : icons) {
             PuzzlePiece piece = icon.getPiece();
-            icon.setBounds(piece.getCurrentPosition().x - offset.x, piece.getCurrentPosition().y - offset.y, piece.getShape().getBounds().width + 25, piece.getShape().getBounds().height + 25);
-            mainPanel.add(icon, 2, 0);
+            icon.setBounds(piece.getCurrentPosition().x - offset.x, piece.getCurrentPosition().y - offset.y, piece.getShape().getBounds().width + 1, piece.getShape().getBounds().height + 1);
+            mainPanel.add(icon, icon.getPiece().isSet() ? 2 : 3, 0);
         }
+    }
+
+    public Point getOffset() {
+        if (offset == null) {
+            offset = new Point(0, 0);
+        }
+
+        return offset;
     }
 
 }

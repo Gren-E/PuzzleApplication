@@ -43,7 +43,7 @@ public class Game {
         for (int row = 0; row < getRows(); row++) {
             for (int column = 0; column < getColumns(); column++) {
                 PuzzlePiece piece = pieces[row][column];
-                if (!piece.isMatchedOnBoard()) {
+                if (!piece.isSet()) {
                     shuffledPieces.add(piece);
                 }
             }

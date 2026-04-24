@@ -40,15 +40,20 @@ public class PuzzleIcon extends JLabel {
         g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
-        g2.translate(20 - nwCorner.x, 20 - nwCorner.y);
+        g2.translate(-nwCorner.x, -nwCorner.y);
 
         g2.setPaint(new TexturePaint((BufferedImage) image, new Rectangle(image.getWidth(null), image.getHeight(null))));
         g2.fill(piece.getShape());
 
-        g2.setColor(Color.BLACK);
-        g2.draw(piece.getShape());
+        if (!piece.isSet()) {
+            g2.setColor(Color.WHITE);
+            g2.draw(piece.getShape());
+        }
 
-        g2.translate(nwCorner.x - 20, nwCorner.y - 20);
+//        g2.setColor(Color.RED);
+//        g2.draw(piece.getShape().getBounds());
+
+        g2.translate(nwCorner.x, nwCorner.y);
     }
 
 

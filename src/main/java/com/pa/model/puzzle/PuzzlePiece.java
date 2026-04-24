@@ -10,8 +10,7 @@ public class PuzzlePiece {
     private final PieceShape shape;
 
     private Point currentPosition;
-
-    private boolean isMatchedOnBoard;
+    private boolean isPositionFinal;
 
     public PuzzlePiece(int id, PieceShape shape) {
         this.id = id;
@@ -37,8 +36,12 @@ public class PuzzlePiece {
         return currentPosition;
     }
 
-    public boolean isMatchedOnBoard() {
-        return isMatchedOnBoard;
+    public void markAsSet() {
+        this.isPositionFinal = true;
+    }
+
+    public boolean isSet() {
+        return isPositionFinal;
     }
 
     @Override
