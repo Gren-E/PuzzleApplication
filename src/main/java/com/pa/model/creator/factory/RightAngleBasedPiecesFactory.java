@@ -88,7 +88,6 @@ public class RightAngleBasedPiecesFactory extends PiecesFactory {
 
                     PieceShapeOutline down = i != pointsGrid.length - 1 ? outlines[i][j] : null;
                     if (down != null) {
-                        down.setNWCorner(start);
                         down.setNorth(pathHorizontal);
                     }
                 }

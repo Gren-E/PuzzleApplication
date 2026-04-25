@@ -7,8 +7,6 @@ import java.awt.geom.Path2D;
 
 public class PieceShapeOutline {
 
-    private Point nwCorner;
-
     private Path2D north;
     private Path2D east;
     private Path2D south;
@@ -18,10 +16,6 @@ public class PieceShapeOutline {
 
     public PieceShapeOutline(boolean inverseDirection) {
         this.inverseDirection = inverseDirection;
-    }
-
-    public void setNWCorner(Point corner) {
-        this.nwCorner = corner;
     }
 
     public void setNorth(Path2D north) {
@@ -55,7 +49,7 @@ public class PieceShapeOutline {
         }
 
         result.closePath();
-        return new PieceShape(nwCorner, result);
+        return new PieceShape(result);
     }
 
 }

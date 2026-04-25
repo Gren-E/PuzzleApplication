@@ -5,16 +5,14 @@ import java.awt.Shape;
 
 public class PieceShape {
 
-    private final Point nwCorner;
     private final Shape shape;
 
-    public PieceShape(Point nwCorner, Shape shape) {
-        this.nwCorner = nwCorner;
+    public PieceShape(Shape shape) {
         this.shape = shape;
     }
 
     public Point getNWCorner() {
-        return nwCorner;
+        return new Point(getShape().getBounds().x, getShape().getBounds().y);
     }
 
     public Shape getShape() {
