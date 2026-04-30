@@ -23,7 +23,7 @@ public class RightAngleBasedPiecesFactory extends PiecesFactory {
         return pieces;
     }
 
-    private Point[][] generatePointsOnGrid(int rows, int columns, int width, int height) {
+    protected Point[][] generatePointsOnGrid(int rows, int columns, int width, int height) {
         if (rows >= width) {
             throw new IllegalArgumentException(String.format("Too many rows (%s) for given width (%s).", rows, width));
         }
@@ -52,7 +52,7 @@ public class RightAngleBasedPiecesFactory extends PiecesFactory {
         return pointsGrid;
     }
 
-    private PieceShape[][] generatePieceAreas(Point[][] pointsGrid) {
+    protected PieceShape[][] generatePieceAreas(Point[][] pointsGrid) {
         PieceShapeOutline[][] outlines = new PieceShapeOutline[pointsGrid.length - 1][pointsGrid[0].length - 1];
         ArrayUtil.setEach(outlines, (row, column) -> new PieceShapeOutline((row + column) % 2 == 1));
 
@@ -99,7 +99,7 @@ public class RightAngleBasedPiecesFactory extends PiecesFactory {
         return shapes;
     }
 
-    private Path2D generatePuzzlePieceEdge(Point2D start, Point2D end, boolean isFlat) {
+    protected Path2D generatePuzzlePieceEdge(Point2D start, Point2D end, boolean isFlat) {
         Path2D path = new Path2D.Double();
         path.moveTo(start.getX(), start.getY());
 
@@ -143,6 +143,7 @@ public class RightAngleBasedPiecesFactory extends PiecesFactory {
         path.lineTo(bumpMidStartX, bumpMidStartY);
         path.lineTo(bumpMidEndX, bumpMidEndY);
         path.lineTo(bumpEndX, bumpEndY);
+        //path.quadTo(bumpMidEndX, bumpMidEndY, bumpEndX, bumpEndY);
         path.lineTo(end.getX(), end.getY());
 
         return path;

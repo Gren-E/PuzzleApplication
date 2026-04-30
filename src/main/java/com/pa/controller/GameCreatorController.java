@@ -1,6 +1,7 @@
 package com.pa.controller;
 
 import com.pa.model.creator.GameCreator;
+import com.pa.model.creator.factory.PieceShape;
 import com.pa.model.game.Game;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,10 @@ public class GameCreatorController {
 
     public void setColumns(int columns) {
         creator.setColumns(columns);
+    }
+
+    public void setShape(PieceShape pieceShape) {
+        creator.setPieceShape(pieceShape);
     }
 
     public void setImage(Image image) {
