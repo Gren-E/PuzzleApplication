@@ -8,9 +8,9 @@ import java.awt.event.MouseEvent;
 public class PuzzleIconDragMouseAdapter extends DragMouseAdapter {
 
     private final PuzzleIcon icon;
-    private final GameController controller;
+    private final PuzzleController controller;
 
-    public PuzzleIconDragMouseAdapter(PuzzleIcon icon, GameController controller) {
+    public PuzzleIconDragMouseAdapter(PuzzleIcon icon, PuzzleController controller) {
         super(icon);
         this.icon = icon;
         this.controller = controller;

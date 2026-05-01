@@ -50,9 +50,6 @@ public class PuzzleIcon extends JLabel {
             g2.draw(piece.getShape());
         }
 
-//        g2.setColor(Color.RED);
-//        g2.draw(piece.getShape().getBounds());
-
         g2.translate(nwCorner.x, nwCorner.y);
     }
 

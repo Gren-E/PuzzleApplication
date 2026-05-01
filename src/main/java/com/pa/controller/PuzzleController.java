@@ -1,6 +1,6 @@
 package com.pa.controller;
 
-import com.pa.model.game.Game;
+import com.pa.model.puzzle.PuzzleData;
 import com.pa.model.puzzle.PuzzlePiece;
 import com.pa.view.PuzzleIcon;
 import org.slf4j.Logger;
@@ -10,21 +10,21 @@ import java.awt.Image;
 import java.awt.Point;
 import java.util.function.Supplier;
 
-public class GameController {
+public class PuzzleController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(GameController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PuzzleController.class);
 
-    private Game game;
+    private PuzzleData puzzleData;
     private Supplier<Point> offsetSupplier;
     private int puzzleToleranceForJoining;
 
-    public GameController() {
+    public PuzzleController() {
         puzzleToleranceForJoining = 10;
     }
 
     public void regularizePieces() {
-        if (game != null) {
-            game.regularizePieces();
+        if (puzzleData != null) {
+            puzzleData.regularizePieces();
         }
     }
 
@@ -33,35 +33,27 @@ public class GameController {
         Point expectedPosition = icon.getPiece().getNWCorner();
 
         if (PuzzleControllerUtil.arePointsEqual(newPosition, expectedPosition, puzzleToleranceForJoining)) {
-            PuzzleControllerUtil.adjustPiecePosition(icon, expectedPosition, getOffset());
+            PuzzleControllerUtil.adjustPiecePosition(puzzleData, icon, expectedPosition, getOffset());
             icon.getPiece().markAsSet();
 
             LOG.debug("Puzzle piece {} set with position {}.", icon.getPiece(), expectedPosition);
         }
     }
 
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    public Game getGame() {
-        return game;
-    }
-
-    public int getRows() {
-        return game != null ? game.getRows() : 0;
-    }
-
-    public int getColumns() {
-        return game != null ? game.getColumns() : 0;
+    public void setPuzzleData(PuzzleData data) {
+        this.puzzleData = data;
     }
 
     public PuzzlePiece[][] getPieces() {
-        return game != null ? game.getPieces() : new PuzzlePiece[0][0];
+        return puzzleData != null ? puzzleData.getPieces() : new PuzzlePiece[0][0];
+    }
+
+    public Point getPiecePosition(int ordinal) {
+        return puzzleData.getPiecePosition(ordinal);
     }
 
     public Image getImage() {
-        return game != null ? game.getImage() : null;
+        return puzzleData != null ? puzzleData.getImage() : null;
     }
 
     public void setOffsetSupplier(Supplier<Point> offsetSupplier) {

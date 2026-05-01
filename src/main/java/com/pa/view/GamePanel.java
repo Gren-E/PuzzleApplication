@@ -1,7 +1,7 @@
 package com.pa.view;
 
 import com.gutil.gui.adapters.DragMouseAdapter;
-import com.pa.controller.GameController;
+import com.pa.controller.PuzzleController;
 import com.pa.controller.PuzzleIconDragMouseAdapter;
 import com.pa.model.puzzle.PuzzlePiece;
 
@@ -16,7 +16,7 @@ public class GamePanel extends JPanel {
 
     private final AppWindow parent;
 
-    private final GameController gameController;
+    private final PuzzleController puzzleController;
 
     private List<PuzzleIcon> icons;
 
@@ -30,7 +30,7 @@ public class GamePanel extends JPanel {
         setBackground(Color.BLACK);
 
         this.parent = parent;
-        gameController = parent.getGameController();
+        puzzleController = parent.getPuzzleController();
     }
 
     public void reload() {
@@ -38,19 +38,19 @@ public class GamePanel extends JPanel {
         mainPanel.setLayout(null);
 
         offset = new Point(-50, -50);
-        gameController.setOffsetSupplier(this::getOffset);
+        puzzleController.setOffsetSupplier(this::getOffset);
 
         imageBoard = new JPanel();
         imageBoard.setBackground(Color.GRAY);
 
-        icons = PuzzleIconFactory.createPuzzleIcons(gameController.getPieces(), gameController.getImage());
+        icons = PuzzleIconFactory.createPuzzleIcons(puzzleController.getPieces(), puzzleController.getImage());
         for (PuzzleIcon icon : icons) {
-            DragMouseAdapter adapter = new PuzzleIconDragMouseAdapter(icon, gameController);
+            DragMouseAdapter adapter = new PuzzleIconDragMouseAdapter(icon, puzzleController);
             icon.addMouseListener(adapter);
             icon.addMouseMotionListener(adapter);
         }
 
-        gameController.regularizePieces();
+        puzzleController.regularizePieces();
         regularizeIcons();
     }
 
@@ -60,12 +60,13 @@ public class GamePanel extends JPanel {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
-        imageBoard.setBounds(-offset.x, -offset.y, gameController.getImage().getWidth(null), gameController.getImage().getHeight(null));
+        imageBoard.setBounds(-offset.x, -offset.y, puzzleController.getImage().getWidth(null), puzzleController.getImage().getHeight(null));
         mainPanel.add(imageBoard, 1, 0);
 
         for (PuzzleIcon icon : icons) {
             PuzzlePiece piece = icon.getPiece();
-            icon.setBounds(piece.getCurrentPosition().x - offset.x, piece.getCurrentPosition().y - offset.y, piece.getShape().getBounds().width + 1, piece.getShape().getBounds().height + 1);
+            Point piecePosition = puzzleController.getPiecePosition(piece.getOrdinal());
+            icon.setBounds(piecePosition.x - offset.x, piecePosition.y - offset.y, piece.getShape().getBounds().width + 1, piece.getShape().getBounds().height + 1);
             mainPanel.add(icon, icon.getPiece().isSet() ? 2 : 3, 0);
         }
     }

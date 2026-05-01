@@ -1,11 +1,10 @@
 package com.pa.model.creator;
 
-import com.pa.model.creator.factory.PiecesFactory;
+import com.pa.model.creator.factory.PuzzleFactory;
 import com.pa.model.game.Game;
-import com.pa.model.puzzle.PuzzlePiece;
+import com.pa.model.puzzle.PuzzleData;
 
 import java.awt.Image;
-import java.awt.Rectangle;
 
 public class GameCreator {
 
@@ -28,7 +27,7 @@ public class GameCreator {
 
     public Game buildGame() {
         if (validateGameParameters()) {
-            return new Game(image, generatePieces());
+            return new Game(generatePuzzleData());
         }
         throw new IllegalStateException("Cannot create the game - incorrect parameters.");
     }
@@ -37,9 +36,9 @@ public class GameCreator {
         return image != null && rows >= 1 && columns >= 1 && rows * columns > 1;
     }
 
-    public PuzzlePiece[][] generatePieces() {
-        PiecesFactory factory = PiecesFactory.getFactory();
-        return factory.generatePieces(rows, columns, image.getWidth(null), image.getHeight(null));
+    public PuzzleData generatePuzzleData() {
+        PuzzleFactory factory = PuzzleFactory.getFactory();
+        return factory.generatePuzzle(rows, columns, image);
     }
 
 }

@@ -1,6 +1,6 @@
 package com.pa.view;
 
-import com.pa.controller.GameController;
+import com.pa.controller.PuzzleController;
 import com.pa.model.game.Game;
 
 import javax.swing.JFrame;
@@ -16,7 +16,7 @@ public class AppWindow extends JFrame {
     private final GameCreatorPanel gameCreatorPanel;
     private final JPanel mainPanel;
 
-    private final GameController gameController;
+    private final PuzzleController puzzleController;
 
     private final CardLayout cardLayout;
 
@@ -25,7 +25,7 @@ public class AppWindow extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
 
-        gameController = new GameController();
+        puzzleController = new PuzzleController();
 
         gameCreatorPanel = new GameCreatorPanel(this);
         gamePanel = new GamePanel(this);
@@ -41,13 +41,13 @@ public class AppWindow extends JFrame {
     }
 
     public void loadGame(Game game) {
-        gameController.setGame(game);
+        puzzleController.setPuzzleData(game.getPuzzleData());
         gamePanel.reload();
         cardLayout.show(mainPanel, GAME_PANEL);
     }
 
-    public GameController getGameController() {
-        return gameController;
+    public PuzzleController getPuzzleController() {
+        return puzzleController;
     }
 
 }

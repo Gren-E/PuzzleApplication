@@ -1,26 +1,35 @@
 package com.pa.model.creator.factory;
 
 import com.gutil.ArrayUtil;
-import com.pa.model.puzzle.PieceShape;
+import com.pa.model.puzzle.PuzzleData;
 import com.pa.model.puzzle.PuzzlePiece;
 
+import java.awt.Image;
 import java.awt.Point;
+import java.awt.Shape;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
-public class RightAngleBasedPiecesFactory extends PiecesFactory {
+public class RightAngleBasedPuzzleFactory extends PuzzleFactory {
 
     private static final Random random = new Random();
 
     @Override
-    public PuzzlePiece[][] generatePieces(int rows, int columns, int width, int height) {
+    public PuzzleData generatePuzzle(int rows, int columns, Image image) {
+        int width = image.getWidth(null);
+        int height = image.getHeight(null);
+
         Point[][] pointsGrid = generatePointsOnGrid(rows, columns, width, height);
-        PieceShape[][] pieceShapes = generatePieceAreas(pointsGrid);
+        Shape[][] pieceShapes = generatePieceAreas(pointsGrid);
 
         PuzzlePiece[][] pieces = new PuzzlePiece[rows][columns];
-        ArrayUtil.setEach(pieces, (row, column) -> new PuzzlePiece(row * columns + column, pieceShapes[row][column]));
-        return pieces;
+        ArrayUtil.setEach(pieces, (row, column) -> new PuzzlePiece(pieceShapes[row][column]));
+
+        PuzzleData data = new PuzzleData();
+        data.setImage(image);
+        data.setPieces(pieces);
+        return data;
     }
 
     private Point[][] generatePointsOnGrid(int rows, int columns, int width, int height) {
@@ -52,7 +61,7 @@ public class RightAngleBasedPiecesFactory extends PiecesFactory {
         return pointsGrid;
     }
 
-    private PieceShape[][] generatePieceAreas(Point[][] pointsGrid) {
+    private Shape[][] generatePieceAreas(Point[][] pointsGrid) {
         PieceShapeOutline[][] outlines = new PieceShapeOutline[pointsGrid.length - 1][pointsGrid[0].length - 1];
         ArrayUtil.setEach(outlines, (row, column) -> new PieceShapeOutline((row + column) % 2 == 1));
 
@@ -94,7 +103,7 @@ public class RightAngleBasedPiecesFactory extends PiecesFactory {
             }
         }
 
-        PieceShape[][] shapes = new PieceShape[pointsGrid.length - 1][pointsGrid[0].length - 1];
+        Shape[][] shapes = new Shape[pointsGrid.length - 1][pointsGrid[0].length - 1];
         ArrayUtil.setEach(shapes, (row, column) -> outlines[row][column].createShape());
         return shapes;
     }

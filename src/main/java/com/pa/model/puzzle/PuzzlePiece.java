@@ -5,35 +5,30 @@ import java.awt.Shape;
 
 public class PuzzlePiece {
 
-    private final int id;
+    private int ordinal;
 
-    private final PieceShape shape;
+    private final Shape shape;
 
-    private Point currentPosition;
     private boolean isPositionFinal;
 
-    public PuzzlePiece(int id, PieceShape shape) {
-        this.id = id;
+    public PuzzlePiece(Shape shape) {
         this.shape = shape;
     }
 
-    public void setCurrentPosition(int x, int y) {
-        currentPosition = new Point(x, y);
+    protected void setOrdinal(int ordinal) {
+        this.ordinal = ordinal;
     }
 
-    public int getId() {
-        return id;
+    public int getOrdinal() {
+        return ordinal;
     }
+
 
     public Shape getShape() {
-        return shape.getShape();
+        return shape;
     }
     public Point getNWCorner() {
-        return shape.getNWCorner();
-    }
-
-    public Point getCurrentPosition() {
-        return currentPosition;
+        return new Point(getShape().getBounds().x, getShape().getBounds().y);
     }
 
     public void markAsSet() {
@@ -46,7 +41,7 @@ public class PuzzlePiece {
 
     @Override
     public String toString() {
-        return String.format("PuzzlePiece{id=%d, currentPosition=%s}", id, currentPosition);
+        return String.format("PuzzlePiece{ordinal=%d}", ordinal);
     }
 
 }
