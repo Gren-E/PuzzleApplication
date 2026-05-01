@@ -33,10 +33,13 @@ public class PuzzleController {
         Point expectedPosition = icon.getPiece().getNWCorner();
 
         if (PuzzleControllerUtil.arePointsEqual(newPosition, expectedPosition, puzzleToleranceForJoining)) {
-            PuzzleControllerUtil.adjustPiecePosition(puzzleData, icon, expectedPosition, getOffset());
-            icon.getPiece().markAsSet();
+            puzzleData.finalize(icon.getPiece());
+            PuzzleControllerUtil.adjustPiecePosition(icon, expectedPosition, getOffset());
+            icon.enableDrawingBorder(false);
+            icon.enableMovement(false);
 
             LOG.debug("Puzzle piece {} set with position {}.", icon.getPiece(), expectedPosition);
+            LOG.debug("Currently {} pieces are finalized.", puzzleData.countFinalizedPieces());
         }
     }
 

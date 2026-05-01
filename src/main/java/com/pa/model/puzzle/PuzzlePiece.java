@@ -2,14 +2,13 @@ package com.pa.model.puzzle;
 
 import java.awt.Point;
 import java.awt.Shape;
+import java.util.Objects;
 
 public class PuzzlePiece {
 
     private int ordinal;
 
     private final Shape shape;
-
-    private boolean isPositionFinal;
 
     public PuzzlePiece(Shape shape) {
         this.shape = shape;
@@ -31,12 +30,14 @@ public class PuzzlePiece {
         return new Point(getShape().getBounds().x, getShape().getBounds().y);
     }
 
-    public void markAsSet() {
-        this.isPositionFinal = true;
+    @Override
+    public boolean equals(Object object) {
+        return object instanceof PuzzlePiece other && ordinal == other.ordinal;
     }
 
-    public boolean isSet() {
-        return isPositionFinal;
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(ordinal);
     }
 
     @Override

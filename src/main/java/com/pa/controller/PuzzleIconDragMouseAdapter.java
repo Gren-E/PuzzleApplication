@@ -18,30 +18,24 @@ public class PuzzleIconDragMouseAdapter extends DragMouseAdapter {
 
     @Override
     public void mousePressed(MouseEvent event) {
-        if (icon.getPiece().isSet()) {
-            return;
+        if (icon.canBeMoved()) {
+            super.mousePressed(event);
         }
-
-        super.mousePressed(event);
     }
 
     @Override
     public void mouseDragged(MouseEvent event) {
-        if (icon.getPiece().isSet()) {
-            return;
+        if (icon.canBeMoved()) {
+            super.mouseDragged(event);
         }
-
-        super.mouseDragged(event);
     }
 
     @Override
     public void mouseReleased(MouseEvent event) {
-        if (icon.getPiece().isSet()) {
-            return;
+        if (icon.canBeMoved()) {
+            super.mouseReleased(event);
+            controller.handlePuzzleIconPositionChange(icon);
         }
-
-        super.mouseReleased(event);
-        controller.handlePuzzleIconPositionChange(icon);
     }
 
 }

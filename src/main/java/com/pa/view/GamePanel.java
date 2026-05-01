@@ -67,7 +67,7 @@ public class GamePanel extends JPanel {
             PuzzlePiece piece = icon.getPiece();
             Point piecePosition = puzzleController.getPiecePosition(piece.getOrdinal());
             icon.setBounds(piecePosition.x - offset.x, piecePosition.y - offset.y, piece.getShape().getBounds().width + 1, piece.getShape().getBounds().height + 1);
-            mainPanel.add(icon, icon.getPiece().isSet() ? 2 : 3, 0);
+            mainPanel.add(icon, icon.canBeMoved() ? 2 : 3, 0);
         }
     }
 

@@ -12,10 +12,13 @@ public class PuzzleData {
 
     private Image image;
     private PuzzlePiece[][] pieces;
+    private PuzzleFragment finalizedPuzzle;
+    private final List<PuzzleFragment> fragments;
     private final Map<Integer, Point> currentPositions;
 
     public PuzzleData() {
         this.currentPositions = new HashMap<>();
+        this.fragments = new ArrayList<>();
     }
 
     public void setImage(Image image) {
@@ -29,6 +32,7 @@ public class PuzzleData {
     public void setPieces(PuzzlePiece[][] pieces) {
         this.pieces = pieces;
         currentPositions.clear();
+        finalizedPuzzle = new PuzzleFragment(-1);
 
         int ordinal = 0;
         int numberOfColumns = -1;
@@ -45,6 +49,10 @@ public class PuzzleData {
                 PuzzlePiece piece = pieces[row][column];
                 piece.setOrdinal(ordinal);
                 currentPositions.put(ordinal, piece.getNWCorner());
+
+                PuzzleFragment fragment = new PuzzleFragment(ordinal);
+                fragment.addPiece(piece);
+                fragments.add(fragment);
 
                 ordinal++;
             }
@@ -82,12 +90,20 @@ public class PuzzleData {
         return countRows() * countColumns();
     }
 
+    public int countFinalizedPieces() {
+        return finalizedPuzzle.countPieces();
+    }
+
+    public boolean isFinalized(PuzzlePiece piece) {
+        return finalizedPuzzle.hasPiece(piece);
+    }
+
     public void regularizePieces() {
         List<PuzzlePiece> shuffledPieces = new ArrayList<>();
         for (int row = 0; row < countRows(); row++) {
             for (int column = 0; column < countColumns(); column++) {
                 PuzzlePiece piece = pieces[row][column];
-                if (!piece.isSet()) {
+                if (!isFinalized(piece)) {
                     shuffledPieces.add(piece);
                 }
             }
@@ -116,6 +132,16 @@ public class PuzzleData {
             x = image.getWidth(null) + standardGap;
             y += height + standardGap;
         }
+    }
+
+    public void finalize(PuzzlePiece piece) {
+        currentPositions.put(piece.getOrdinal(), piece.getNWCorner());
+        removeFragmentContainingPiece(piece);
+        finalizedPuzzle.addPiece(piece);
+    }
+
+    private void removeFragmentContainingPiece(PuzzlePiece piece) {
+        fragments.removeIf(fragment -> fragment.hasPiece(piece));
     }
 
 }

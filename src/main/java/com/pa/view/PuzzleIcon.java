@@ -17,14 +17,30 @@ public class PuzzleIcon extends JLabel {
 
     private final PuzzlePiece piece;
     private final Image image;
+    private boolean drawBorder;
+    private boolean allowMovement;
 
     public PuzzleIcon(Image image, PuzzlePiece piece) {
         this.piece = piece;
         this.image = image;
+        this.drawBorder = true;
+        this.allowMovement = true;
     }
 
     public PuzzlePiece getPiece() {
         return piece;
+    }
+
+    public void enableDrawingBorder(boolean shouldEnable) {
+        drawBorder = shouldEnable;
+    }
+
+    public void enableMovement(boolean shouldMove) {
+        allowMovement = shouldMove;
+    }
+
+    public boolean canBeMoved() {
+        return allowMovement;
     }
 
     @Override
@@ -45,7 +61,7 @@ public class PuzzleIcon extends JLabel {
         g2.setPaint(new TexturePaint((BufferedImage) image, new Rectangle(image.getWidth(null), image.getHeight(null))));
         g2.fill(piece.getShape());
 
-        if (!piece.isSet()) {
+        if (drawBorder) {
             g2.setColor(Color.WHITE);
             g2.draw(piece.getShape());
         }
