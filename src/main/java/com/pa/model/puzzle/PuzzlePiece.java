@@ -7,6 +7,7 @@ import java.util.Objects;
 public class PuzzlePiece {
 
     private int ordinal;
+    private int[] neighbouringOrdinals;
 
     private final Shape shape;
 
@@ -22,6 +23,13 @@ public class PuzzlePiece {
         return ordinal;
     }
 
+    public void setNeighbouringOrdinals(int[] array) {
+        neighbouringOrdinals = array;
+    }
+
+    public int[] getNeighbouringOrdinals() {
+        return neighbouringOrdinals;
+    }
 
     public Shape getShape() {
         return shape;

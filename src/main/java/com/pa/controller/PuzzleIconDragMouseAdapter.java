@@ -9,11 +9,17 @@ public class PuzzleIconDragMouseAdapter extends DragMouseAdapter {
 
     private final PuzzleIcon icon;
     private final PuzzleController controller;
+    private Runnable iconRebuildingAction;
 
     public PuzzleIconDragMouseAdapter(PuzzleIcon icon, PuzzleController controller) {
         super(icon);
         this.icon = icon;
         this.controller = controller;
+        iconRebuildingAction = () -> {};
+    }
+
+    public void setIconRebuildingAction(Runnable action) {
+        iconRebuildingAction = action;
     }
 
     @Override
@@ -34,7 +40,10 @@ public class PuzzleIconDragMouseAdapter extends DragMouseAdapter {
     public void mouseReleased(MouseEvent event) {
         if (icon.canBeMoved()) {
             super.mouseReleased(event);
-            controller.handlePuzzleIconPositionChange(icon);
+            boolean result = controller.handlePuzzleIconPositionChange(icon);
+            if (result) {
+                iconRebuildingAction.run();
+            }
         }
     }
 

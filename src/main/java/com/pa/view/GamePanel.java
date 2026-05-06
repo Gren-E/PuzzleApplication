@@ -1,9 +1,8 @@
 package com.pa.view;
 
-import com.gutil.gui.adapters.DragMouseAdapter;
 import com.pa.controller.PuzzleController;
 import com.pa.controller.PuzzleIconDragMouseAdapter;
-import com.pa.model.puzzle.PuzzlePiece;
+import com.pa.model.puzzle.PuzzleFragment;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -43,32 +42,37 @@ public class GamePanel extends JPanel {
         imageBoard = new JPanel();
         imageBoard.setBackground(Color.GRAY);
 
-        icons = PuzzleIconFactory.createPuzzleIcons(puzzleController.getPieces(), puzzleController.getImage());
-        for (PuzzleIcon icon : icons) {
-            DragMouseAdapter adapter = new PuzzleIconDragMouseAdapter(icon, puzzleController);
-            icon.addMouseListener(adapter);
-            icon.addMouseMotionListener(adapter);
-        }
-
-        puzzleController.regularizePieces();
-        regularizeIcons();
-    }
-
-    public void regularizeIcons() {
         removeAll();
-        mainPanel.removeAll();
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
+        puzzleController.regularizePieces();
+        regenerateIcons();
+    }
+
+    public void regenerateIcons() {
         imageBoard.setBounds(-offset.x, -offset.y, puzzleController.getImage().getWidth(null), puzzleController.getImage().getHeight(null));
+        mainPanel.removeAll();
         mainPanel.add(imageBoard, 1, 0);
 
+        icons = PuzzleIconFactory.createPuzzleIcons(puzzleController.getFragments(true), puzzleController.getImage());
         for (PuzzleIcon icon : icons) {
-            PuzzlePiece piece = icon.getPiece();
-            Point piecePosition = puzzleController.getPiecePosition(piece.getOrdinal());
-            icon.setBounds(piecePosition.x - offset.x, piecePosition.y - offset.y, piece.getShape().getBounds().width + 1, piece.getShape().getBounds().height + 1);
-            mainPanel.add(icon, icon.canBeMoved() ? 2 : 3, 0);
+            PuzzleIconDragMouseAdapter adapter = new PuzzleIconDragMouseAdapter(icon, puzzleController);
+            adapter.setIconRebuildingAction(this::regenerateIcons);
+            icon.addMouseListener(adapter);
+            icon.addMouseMotionListener(adapter);
+
+            PuzzleFragment fragment = icon.getFragment();
+            if (fragment.getPieces().length == 0) {
+                continue;
+            }
+
+            Point piecePosition = puzzleController.getFragmentPosition(fragment);
+            icon.setBounds(piecePosition.x - offset.x, piecePosition.y - offset.y, fragment.getShape().getBounds().width + 1, fragment.getShape().getBounds().height + 1);
+            mainPanel.add(icon, fragment.isFinalized() ? 1 : Integer.MAX_VALUE - fragment.countPieces(), 0);
         }
+
+        repaint();
     }
 
     public Point getOffset() {
