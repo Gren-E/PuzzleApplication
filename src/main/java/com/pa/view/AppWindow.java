@@ -2,7 +2,7 @@ package com.pa.view;
 
 import com.gutil.gui.GBC;
 import com.gutil.gui.component.button.RoundRectButton;
-import com.pa.controller.GameController;
+import com.pa.controller.PuzzleController;
 import com.pa.model.game.Game;
 
 import javax.swing.JFrame;
@@ -22,7 +22,7 @@ public class AppWindow extends JFrame {
     private final JPanel mainPanel;
     private final JPanel menuPanel;
 
-    private final GameController gameController;
+    private final PuzzleController puzzleController;
 
     private final CardLayout cardLayout;
 
@@ -32,7 +32,7 @@ public class AppWindow extends JFrame {
         setExtendedState(MAXIMIZED_BOTH);
         setUndecorated(true);
 
-        gameController = new GameController();
+        puzzleController = new PuzzleController();
 
         gameCreatorPanel = new GameCreatorPanel(this);
         catalogPanel = new CatalogPanel(this);
@@ -62,7 +62,7 @@ public class AppWindow extends JFrame {
     }
 
     public void loadGame(Game game) {
-        gameController.setGame(game);
+        puzzleController.setPuzzleData(game.getPuzzleData());
         gamePanel.reload();
         cardLayout.show(mainPanel, GAME_PANEL);
     }
@@ -75,8 +75,8 @@ public class AppWindow extends JFrame {
         }
     }
 
-    public GameController getGameController() {
-        return gameController;
+    public PuzzleController getPuzzleController() {
+        return puzzleController;
     }
 
     public GameCreatorPanel getGameCreatorPanel() {

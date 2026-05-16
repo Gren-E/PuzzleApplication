@@ -3,7 +3,7 @@ package com.pa.model.creator.factory;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 
-public class RectangularPiecesFactory extends RightAngleBasedPiecesFactory {
+public class RectangularPuzzleFactory extends RightAngleBasedPuzzleFactory {
 
     @Override
     protected Path2D generatePuzzlePieceEdge(Point2D start, Point2D end, boolean isFlat) {

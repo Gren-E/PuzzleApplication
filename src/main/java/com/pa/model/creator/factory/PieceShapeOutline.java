@@ -1,8 +1,6 @@
 package com.pa.model.creator.factory;
 
-import com.pa.model.puzzle.PieceShape;
-
-import java.awt.Point;
+import java.awt.Shape;
 import java.awt.geom.Path2D;
 
 public class PieceShapeOutline {
@@ -34,7 +32,7 @@ public class PieceShapeOutline {
         this.west = west;
     }
 
-    public PieceShape createShape() {
+    public Shape createShape() {
         Path2D result = new Path2D.Double();
         if (inverseDirection) {
             result.append(west, true);
@@ -49,7 +47,7 @@ public class PieceShapeOutline {
         }
 
         result.closePath();
-        return new PieceShape(result);
+        return result;
     }
 
 }
