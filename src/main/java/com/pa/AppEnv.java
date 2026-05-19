@@ -4,7 +4,7 @@ import java.io.File;
 
 public class AppEnv {
 
-    private static final String resourceDirectory = "C:\\Workspace\\Java\\PuzzleApplication\\src\\main\\resources";
+    private static final String resourceDirectory = "C:\\Users\\dariu\\Desktop\\PUZZLE";
 
     public static File getResourceDirectory() {
         return new File(resourceDirectory);

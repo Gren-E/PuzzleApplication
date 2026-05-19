@@ -1,7 +1,7 @@
 package com.pa.controller;
 
 import com.gutil.gui.adapters.DragMouseAdapter;
-import com.pa.view.PuzzleIcon;
+import com.pa.view.icon.PuzzleIcon;
 
 import java.awt.event.MouseEvent;
 

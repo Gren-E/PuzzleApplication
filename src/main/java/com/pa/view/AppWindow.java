@@ -4,6 +4,9 @@ import com.gutil.gui.GBC;
 import com.gutil.gui.component.button.RoundRectButton;
 import com.pa.controller.PuzzleController;
 import com.pa.model.game.Game;
+import com.pa.view.game.CatalogPanel;
+import com.pa.view.game.GameCreatorPanel;
+import com.pa.view.game.GamePanel;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -63,7 +66,8 @@ public class AppWindow extends JFrame {
 
     public void loadGame(Game game) {
         puzzleController.setPuzzleData(game.getPuzzleData());
-        gamePanel.reload();
+        gamePanel.regularize();
+        gamePanel.reset();
         cardLayout.show(mainPanel, GAME_PANEL);
     }
 

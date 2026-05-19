@@ -3,7 +3,8 @@ package com.pa.controller;
 import com.pa.model.puzzle.PuzzleData;
 import com.pa.model.puzzle.PuzzleFragment;
 import com.pa.model.puzzle.PuzzlePiece;
-import com.pa.view.PuzzleIcon;
+import com.pa.view.game.GamePanel;
+import com.pa.view.icon.PuzzleIcon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,12 +19,18 @@ public class PuzzleController {
 
     private static final Logger LOG = LoggerFactory.getLogger(PuzzleController.class);
 
+    private GamePanel gamePanel;
+
     private PuzzleData puzzleData;
     private Supplier<Point> offsetSupplier;
     private int puzzleToleranceForJoining;
 
     public PuzzleController() {
         puzzleToleranceForJoining = 10;
+    }
+
+    public void setGamePanel(GamePanel panel) {
+        this.gamePanel = panel;
     }
 
     public void setPuzzleData(PuzzleData data) {
