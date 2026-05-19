@@ -43,4 +43,12 @@ public class GameCreatorController {
         creator.setImage(image);
     }
 
+    public void setMaxPuzzleWidth(int width) {
+        creator.setMaxPuzzleWidth(width);
+    }
+
+    public void setMaxPuzzleHeight(int height) {
+        creator.setMaxPuzzleHeight(height);
+    }
+
 }
