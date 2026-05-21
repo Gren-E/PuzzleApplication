@@ -1,4 +1,4 @@
-package com.pa.view;
+package com.pa.view.game;
 
 import com.gutil.gui.GBC;
 import com.gutil.gui.ImageUtil;
@@ -12,6 +12,8 @@ import com.pa.AppEnv;
 import com.pa.controller.GameCreatorController;
 import com.pa.model.creator.factory.PieceShape;
 import com.pa.model.game.Game;
+import com.pa.view.AppWindow;
+import com.pa.view.ComponentFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -136,6 +138,8 @@ public class GameCreatorPanel extends RoundRectPanel {
             creatorController.setRows(rowsSlider.getValue());
             creatorController.setColumns(columnsSlider.getValue());
             creatorController.setShape(shapeFlag);
+            creatorController.setMaxPuzzleWidth(getWidth() - 60);
+            creatorController.setMaxPuzzleHeight(getHeight() - 60);
 
             Game game = creatorController.buildGame();
             window.loadGame(game);

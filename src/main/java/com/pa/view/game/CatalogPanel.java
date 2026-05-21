@@ -1,4 +1,4 @@
-package com.pa.view;
+package com.pa.view.game;
 
 import com.gutil.gui.GBC;
 import com.gutil.gui.ImageUtil;
@@ -9,6 +9,8 @@ import com.gutil.gui.component.button.RoundButton;
 import com.gutil.gui.component.button.RoundRectButton;
 import com.gutil.gui.component.panel.RoundRectPanel;
 import com.pa.AppEnv;
+import com.pa.view.AppWindow;
+import com.pa.view.ComponentFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

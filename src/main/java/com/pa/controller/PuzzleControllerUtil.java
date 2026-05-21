@@ -1,6 +1,6 @@
 package com.pa.controller;
 
-import com.pa.view.PuzzleIcon;
+import com.pa.view.icon.PuzzleIcon;
 
 import java.awt.Point;
 

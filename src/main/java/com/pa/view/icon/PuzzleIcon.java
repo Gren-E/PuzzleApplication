@@ -1,4 +1,4 @@
-package com.pa.view;
+package com.pa.view.icon;
 
 import com.pa.model.puzzle.PuzzleFragment;
 

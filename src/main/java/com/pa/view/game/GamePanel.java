@@ -1,8 +1,11 @@
-package com.pa.view;
+package com.pa.view.game;
 
 import com.pa.controller.PuzzleController;
 import com.pa.controller.PuzzleIconDragMouseAdapter;
 import com.pa.model.puzzle.PuzzleFragment;
+import com.pa.view.AppWindow;
+import com.pa.view.icon.PuzzleIcon;
+import com.pa.view.icon.PuzzleIconFactory;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -20,45 +23,68 @@ public class GamePanel extends JPanel {
     private List<PuzzleIcon> icons;
 
     private Point offset;
-
     private JPanel imageBoard;
+    private GamePanelConsole console;
 
     private JLayeredPane mainPanel;
 
     public GamePanel(AppWindow parent) {
         setBackground(Color.BLACK);
 
+        offset = new Point(0, 0);
+
         this.parent = parent;
         puzzleController = parent.getPuzzleController();
-    }
+        puzzleController.setGamePanel(this);
+        puzzleController.setOffsetSupplier(this::getOffset);
 
-    public void reload() {
         mainPanel = new JLayeredPane();
         mainPanel.setLayout(null);
 
-        offset = new Point(-50, -50);
-        puzzleController.setOffsetSupplier(this::getOffset);
-
         imageBoard = new JPanel();
-        imageBoard.setBackground(Color.GRAY);
+        imageBoard.setBackground(new Color(60, 60, 60));
 
-        removeAll();
+        console = new GamePanelConsole(this);
+
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
-
-        puzzleController.regularizePieces();
-        regenerateIcons();
+        add(console, BorderLayout.SOUTH);
     }
 
-    public void regenerateIcons() {
-        imageBoard.setBounds(-offset.x, -offset.y, puzzleController.getImage().getWidth(null), puzzleController.getImage().getHeight(null));
-        mainPanel.removeAll();
-        mainPanel.add(imageBoard, 1, 0);
+    public PuzzleController getPuzzleController() {
+        return puzzleController;
+    }
 
+    public void reset() {
+        mainPanel.removeAll();
+
+        int panelWidth = getWidth();
+        int panelHeight = getHeight();
+        int imageWidth = puzzleController.getImage().getWidth(null);
+        int imageHeight = puzzleController.getImage().getHeight(null);
+        offset = new Point(-(panelWidth - imageWidth) / 2, -(panelHeight - imageHeight) / 2);
+        reload();
+    }
+
+    public void regularize() {
+        puzzleController.regularizePieces();
+    }
+
+    public void reload() {
+        mainPanel.removeAll();
+        mainPanel.removeAll();
+        int imageWidth = puzzleController.getImage().getWidth(null);
+        int imageHeight = puzzleController.getImage().getHeight(null);
+        imageBoard.setBounds(-offset.x, -offset.y, imageWidth, imageHeight);
+        mainPanel.add(imageBoard, 1, 0);
+        reloadIcons();
+    }
+
+    private void reloadIcons() {
         icons = PuzzleIconFactory.createPuzzleIcons(puzzleController.getFragments(true), puzzleController.getImage());
         for (PuzzleIcon icon : icons) {
             PuzzleIconDragMouseAdapter adapter = new PuzzleIconDragMouseAdapter(icon, puzzleController);
-            adapter.setIconRebuildingAction(this::regenerateIcons);
+            adapter.setIconRebuildingAction(this::reload);
             icon.addMouseListener(adapter);
             icon.addMouseMotionListener(adapter);
 
