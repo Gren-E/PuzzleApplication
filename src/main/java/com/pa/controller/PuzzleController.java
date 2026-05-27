@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -65,9 +66,12 @@ public class PuzzleController {
         return offsetSupplier == null ? new Point(0, 0) : offsetSupplier.get();
     }
 
-    public void regularizePieces() {
+    public void regularizePieces(Rectangle area, Point areaOffset) {
+        Rectangle adjustedArea = new Rectangle(area.x + areaOffset.x, area.y + areaOffset.y, area.width, area.height);
+        LOG.info("Regularizing pieces. Area: {}.", adjustedArea);
+
         if (puzzleData != null) {
-            puzzleData.regularizePieces();
+            puzzleData.regularizePieces(adjustedArea);
         }
     }
 

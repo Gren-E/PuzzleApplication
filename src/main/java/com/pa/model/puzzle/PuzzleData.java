@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -191,12 +192,12 @@ public class PuzzleData {
         return finalizedPuzzle.hasPiece(piece);
     }
 
-    public void regularizePieces() {
+    public void regularizePieces(Rectangle boardArea) {
         List<PuzzlePiece> shuffledPieces = new ArrayList<>();
         for (int row = 0; row < countRows(); row++) {
             for (int column = 0; column < countColumns(); column++) {
                 PuzzlePiece piece = pieces[row][column];
-                if (!isFinalized(piece)) {
+                if (!isFinalized(piece) && getFragmentOwningPiece(piece).countPieces() == 1) {
                     shuffledPieces.add(piece);
                 }
             }
@@ -204,27 +205,53 @@ public class PuzzleData {
 
         Collections.shuffle(shuffledPieces);
 
-        int standardGap = 8;
-        int shuffledRows = countRows();
-        int shuffledColumns = (shuffledPieces.size() - 1) / shuffledRows + 1;
-        int width = shuffledPieces.get(0).getShape().getBounds().width;
-        int height = shuffledPieces.get(0).getShape().getBounds().height;
-        int x = image.getWidth(null) + standardGap;
-        int y = 0;
+        Rectangle imageRect = new Rectangle(0, 0, image.getWidth(null), image.getHeight(null));
 
-        for (int row = 0; row < shuffledRows; row++) {
-            for (int column = 0; column < shuffledColumns; column++) {
-                int index = row * shuffledColumns + column;
-                if (index >= shuffledPieces.size()) {
-                    break;
-                }
-                PuzzlePiece piece = shuffledPieces.get(index);
-                currentPositions.put(piece.getOrdinal(), new Point(x, y));
-                x += width + standardGap;
+        int x = boardArea.x + 5;
+        int y = boardArea.y + 5;
+        for (PuzzlePiece piece : shuffledPieces) {
+            Rectangle pieceRect = piece.getShape().getBounds();
+
+            Rectangle pieceArea = new Rectangle(x, y, pieceRect.width, pieceRect.height);
+            if (pieceArea.intersects(imageRect)) {
+                x = imageRect.x + imageRect.width + 5;
             }
-            x = image.getWidth(null) + standardGap;
-            y += height + standardGap;
+
+            currentPositions.put(piece.getOrdinal(), new Point(x, y));
+            x += pieceRect.width + 10;
+            if (x + pieceRect.width > boardArea.x + boardArea.width) {
+                x = boardArea.x + 5;
+                y += pieceRect.height + 10;
+            }
+
+            if (y + pieceRect.height > boardArea.y + boardArea.height) {
+                y = boardArea.y + 5;
+            }
         }
+
+
+
+//        int standardGap = 8;
+//        int shuffledRows = countRows();
+//        int shuffledColumns = (shuffledPieces.size() - 1) / shuffledRows + 1;
+//        int width = shuffledPieces.get(0).getShape().getBounds().width;
+//        int height = shuffledPieces.get(0).getShape().getBounds().height;
+//        int x = image.getWidth(null) + standardGap;
+//        int y = 0;
+//
+//        for (int row = 0; row < shuffledRows; row++) {
+//            for (int column = 0; column < shuffledColumns; column++) {
+//                int index = row * shuffledColumns + column;
+//                if (index >= shuffledPieces.size()) {
+//                    break;
+//                }
+//                PuzzlePiece piece = shuffledPieces.get(index);
+//                currentPositions.put(piece.getOrdinal(), new Point(x, y));
+//                x += width + standardGap;
+//            }
+//            x = image.getWidth(null) + standardGap;
+//            y += height + standardGap;
+//        }
     }
 
 }

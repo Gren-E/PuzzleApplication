@@ -55,6 +55,11 @@ public class GamePanel extends JPanel {
         return puzzleController;
     }
 
+    public void regularize() {
+        puzzleController.regularizePieces(getBounds(), getOffset());
+        reload();
+    }
+
     public void reset() {
         mainPanel.removeAll();
 
@@ -66,12 +71,7 @@ public class GamePanel extends JPanel {
         reload();
     }
 
-    public void regularize() {
-        puzzleController.regularizePieces();
-    }
-
     public void reload() {
-        mainPanel.removeAll();
         mainPanel.removeAll();
         int imageWidth = puzzleController.getImage().getWidth(null);
         int imageHeight = puzzleController.getImage().getHeight(null);
