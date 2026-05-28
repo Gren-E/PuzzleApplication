@@ -138,8 +138,8 @@ public class GameCreatorPanel extends RoundRectPanel {
             creatorController.setRows(rowsSlider.getValue());
             creatorController.setColumns(columnsSlider.getValue());
             creatorController.setShape(shapeFlag);
-            creatorController.setMaxPuzzleWidth(getWidth() - 60);
-            creatorController.setMaxPuzzleHeight(getHeight() - 60);
+            creatorController.setMaxPuzzleWidth((int) (0.8 * (getWidth() - 60)));
+            creatorController.setMaxPuzzleHeight((int) (0.8 * (getHeight() - 60)));
 
             Game game = creatorController.buildGame();
             window.loadGame(game);
