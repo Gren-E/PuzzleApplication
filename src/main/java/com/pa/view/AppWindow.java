@@ -68,6 +68,7 @@ public class AppWindow extends JFrame {
         puzzleController.setPuzzleData(game.getPuzzleData());
         gamePanel.reset();
         puzzleController.regularizePieces(gamePanel.getBounds(), gamePanel.getOffset());
+        puzzleController.resetCountdown();
         gamePanel.reload();
         cardLayout.show(mainPanel, GAME_PANEL);
     }

@@ -25,6 +25,8 @@ public class PuzzleController {
     private PuzzleData puzzleData;
     private Supplier<Point> offsetSupplier;
     private int puzzleToleranceForJoining;
+    private long currentCountdownStart;
+    private long countdownStopped;
 
     public PuzzleController() {
         puzzleToleranceForJoining = 10;
@@ -48,6 +50,14 @@ public class PuzzleController {
 
     public Point getPiecePosition(int ordinal) {
         return puzzleData != null ? puzzleData.getPiecePosition(ordinal) : null;
+    }
+
+    public int countSetPieces() {
+        return puzzleData != null ? puzzleData.countFinalizedPieces() : 0;
+    }
+
+    public int countPieces() {
+        return puzzleData != null ? puzzleData.countPieces() : 0;
     }
 
     public PuzzleFragment[] getFragments(boolean includeFinalized) {
@@ -134,6 +144,27 @@ public class PuzzleController {
             Point expectedPosition = piece.getNWCorner();
             return PuzzleControllerUtil.arePointsEqual(actualPosition, expectedPosition, puzzleToleranceForJoining);
         });
+    }
+
+    public void resetCountdown() {
+        currentCountdownStart = System.currentTimeMillis();
+        countdownStopped = 0;
+    }
+
+    public void stopCountdown() {
+        countdownStopped = System.currentTimeMillis();
+    }
+
+    public long getTimeSpendInMillis() {
+        if (countdownStopped != 0) {
+            return countdownStopped - currentCountdownStart;
+        }
+
+        return System.currentTimeMillis() - currentCountdownStart;
+    }
+
+    public boolean isPuzzleFinished() {
+        return countSetPieces() == countPieces();
     }
 
 }
